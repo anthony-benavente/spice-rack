@@ -15,6 +15,7 @@ import { SpiceModel } from "../../db/spice.model";
 })
 export class SpicesComponent implements OnInit {
 
+  @ViewChild('spiceName') spiceName!: { nativeElement: HTMLElement };
   @ViewChild('spiceGrid') spiceGrid!: jqxGridComponent;
 
   spiceColumns = [
@@ -74,6 +75,8 @@ export class SpicesComponent implements OnInit {
       this.spiceGrid.addrow(data.id, data);
       this.spiceGrid.autoresizecolumns();
       this.addSpiceForm.reset();
+
+      console.log(this.spiceName.nativeElement.focus());
     });
   }
 }

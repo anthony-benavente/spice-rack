@@ -7,7 +7,7 @@
 
 <h3>Add New Spice</h3>
 <form [formGroup]="addSpiceForm">
-  <input placeholder="Name" formControlName="name">
+  <input #spiceName placeholder="Name" formControlName="name">
   <input placeholder="Brand" formControlName="brand">
   <select placeholder="Spice Type" formControlName="form">
     <option *ngFor="let form of spiceForms" [value]="form.value">{{form.text}}</option>
