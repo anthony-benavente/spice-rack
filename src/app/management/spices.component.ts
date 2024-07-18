@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { jqxGridComponent, jqxGridModule } from "jqwidgets-ng/jqxgrid";
+import { jqxGridComponent, jqxGridModule,  } from "jqwidgets-ng/jqxgrid";
 import { SpiceForms } from "../../db/spiceForms.enum";
 import { CommonModule } from "@angular/common";
 import { SpicesService } from "../services/spices.service";
@@ -18,12 +18,12 @@ export class SpicesComponent implements OnInit {
   @ViewChild('spiceName') spiceName!: { nativeElement: HTMLElement };
   @ViewChild('spiceGrid') spiceGrid!: jqxGridComponent;
 
-  spiceColumns = [
-    { text: 'Name', dataField: 'name' },
-    { text: 'Brand', dataField: 'brand' },
-    { text: 'Form', dataField: 'form' },
-    { text: 'Created Date', dataField: 'createdAt' },
-    { text: 'Updated Date', dataField: 'updatedAt' },
+  spiceColumns: jqwidgets.GridColumn[] = [
+    { text: 'Name', datafield: 'name' },
+    { text: 'Brand', datafield: 'brand' },
+    { text: 'Form', datafield: 'form' },
+    { text: 'Created Date', datafield: 'createdAt', columntype: 'datetimeinput', cellsformat: 'MMM d, y, hh:mm:ss' },
+    { text: 'Updated Date', datafield: 'updatedAt', columntype: 'datetimeinput', cellsformat: 'MMM d, y, hh:mm:ss' },
   ];
   source: any = {
     localdata: [],
