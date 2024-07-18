@@ -3,7 +3,9 @@
   selectionmode="checkbox" 
   [source]="dataAdapter" 
   [columns]="spiceColumns" 
-  [autoheight]="true"></jqxGrid>
+  [width]="800"
+  [columnsresize]="true"
+  [height]="500"></jqxGrid>
 
 <h3>Add New Spice</h3>
 <form [formGroup]="addSpiceForm">
