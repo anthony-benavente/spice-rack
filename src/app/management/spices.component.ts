@@ -68,14 +68,11 @@ export class SpicesComponent implements OnInit {
     const toAdd = {
       ...this.addSpiceForm.value
     };
-    console.log('Inserting into database:', toAdd);
-
     this.spicesService.addSpice(toAdd).subscribe(data => {
       this.source.localdata.push(data);
       this.spiceGrid.addrow(data.id, data);
       this.spiceGrid.autoresizecolumns();
       this.addSpiceForm.reset();
-
       console.log(this.spiceName.nativeElement.focus());
     });
   }

@@ -3,5 +3,6 @@ export enum SpiceForms {
     WHOLE="whole",
     PASTE="paste",
     SYRUP="syrup",
-    LIQUID="liquid"
+    LIQUID="liquid",
+    DRIEDHERB="dried herb"
 }
