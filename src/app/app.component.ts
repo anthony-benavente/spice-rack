@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SpiceForms } from '../db/spiceForms.enum';
+import { jqxGridComponent, jqxGridModule } from 'jqwidgets-ng/jqxgrid';
+import { CommonModule } from '@angular/common';
+import { UsersComponent } from './management/users.component';
+import { SpicesComponent } from './management/spices.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  standalone: true,
+  imports: [UsersComponent,SpicesComponent, RouterModule]
 })
 export class AppComponent {
-  title = 'spice-rack';
+;
 }

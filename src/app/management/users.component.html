@@ -1,0 +1,11 @@
+<h2>Users</h2>
+<jqxGrid #userGrid selectionmode="checkbox" [source]="usersData" [columns]="usersColumns" [autoheight]="true"
+    [pageable]="false" [altrows]="true" [filterable]="true" [sortable]="true"></jqxGrid>
+
+<h3>Add New User</h3>
+<form [formGroup]="addUserForm">
+    <input placeholder="Name" formControlName="name">
+    <input placeholder="Username" formControlName="username">
+    <input placeholder="Password" formControlName="password">
+    <button type="button" (click)="addUser()">Add User</button>
+</form>
