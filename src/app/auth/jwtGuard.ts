@@ -18,7 +18,7 @@ export class IsLoggedInGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
         // verify the jwt exists and is valid
-        const jwt = this.jwtService.getRawJwt();
+        const jwt = this.jwtService.getAccessToken();
         const canRoute = this.validJwt(jwt);
         // const canRoute = true;
         if (!canRoute) {

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { IToken } from "../token";
 
 @Injectable()
 export class JwtService {
@@ -12,12 +13,19 @@ export class JwtService {
         this.setStorage();
     }
 
-    getRawJwt(): string|null {
-        return this.storage.getItem('jwt');
+    getAccessToken(): string|null {
+        return this.storage.getItem('access');
     }
 
-    setJwt(jwt: string) {
-        this.storage.setItem('jwt', jwt);
+    getRefreshToken(): string|null {
+        return this.storage.getItem('refresh');
+    }
+
+    setJwt(jwt: { access: IToken, refresh: IToken }) {
+        this.storage.setItem('access', jwt.access.token);
+        this.storage.setItem('accessExpirationDate', jwt.access.expires);
+        this.storage.setItem('refresh', jwt.refresh.token);
+        this.storage.setItem('refreshExpirationDate', jwt.refresh.expires);
     }
 
     setStorage(isSessionStorage?: boolean) {
