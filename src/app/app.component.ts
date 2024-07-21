@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { UsersComponent } from './management/users.component';
 import { SpicesComponent } from './management/spices.component';
 import { RouterModule } from '@angular/router';
+import { JwtService } from './auth/services/jwt.service';
+import { IsLoggedInGuard } from './auth/jwtGuard';
 
 @Component({
   selector: 'app-root',
