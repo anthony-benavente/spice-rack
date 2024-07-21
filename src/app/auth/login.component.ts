@@ -1,10 +1,15 @@
+import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { AuthService } from "./services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    standalone: true
+    standalone: true,
+    imports: [ReactiveFormsModule],
+    providers: [AuthService]
 })
 export class LoginComponent {
     loginForm = new FormGroup({
@@ -12,7 +17,16 @@ export class LoginComponent {
         password: new FormControl()
     });
 
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) { }
+
     onLogIn() {
-        console.log(this.loginForm);
+        const loginData = this.loginForm.value;
+        this.authService.login(loginData.username, loginData.password).subscribe(user => {
+            console.log('Log In successful', user);
+            this.router.navigate(['/']);
+        });
     }
 }

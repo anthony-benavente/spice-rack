@@ -1,5 +1,5 @@
-<form formGroup="loginForm">
+<form [formGroup]="loginForm">
     <input formControlName="username">
-    <input formControlName="password">
-    <button type="button">Submit</button>
+    <input type="password" formControlName="password">
+    <button type="button" (click)="onLogIn()">Submit</button>
 </form>
