@@ -1,5 +1,5 @@
 export class UserModel {
-    _id: any;
+    id?: string;
     name?: string;
     email?: string;
     username?: string;

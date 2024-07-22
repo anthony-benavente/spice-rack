@@ -1,11 +1,21 @@
 <h2>Users</h2>
-<jqxGrid #userGrid selectionmode="checkbox" [source]="usersData" [columns]="usersColumns" [autoheight]="true"
-    [pageable]="false" [altrows]="true" [filterable]="true" [sortable]="true"></jqxGrid>
+<jqxGrid #userGrid 
+  selectionmode="checkbox" 
+  [source]="dataAdapter" 
+  [columns]="columns" 
+  [width]="800"
+  [columnsresize]="true"
+  [height]="500"></jqxGrid>
+<button type="button" (click)="deleteUser()">Delete</button>
 
 <h3>Add New User</h3>
 <form [formGroup]="addUserForm">
     <input placeholder="Name" formControlName="name">
     <input placeholder="Username" formControlName="username">
+    <input placeholder="Email" formControlName="email">
     <input placeholder="Password" formControlName="password">
+    <div>
+        <span>Admin <input type="checkbox" formControlName="role"></span>
+    </div>
     <button type="button" (click)="addUser()">Add User</button>
 </form>
