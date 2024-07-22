@@ -5,8 +5,8 @@ import { jqxGridComponent, jqxGridModule } from "jqwidgets-ng/jqxgrid";
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  imports: [jqxGridModule, ReactiveFormsModule],
-  standalone: true
+  standalone: true,
+  imports: [jqxGridModule, ReactiveFormsModule]
 })
 export class UsersComponent {
 

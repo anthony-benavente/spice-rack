@@ -9,9 +9,9 @@ import { SpiceModel } from "../../db/spice.model";
 @Component({
   selector: 'app-spices',
   templateUrl: './spices.component.html',
+  providers: [SpicesService],
   standalone: true,
-  imports: [CommonModule, jqxGridModule, ReactiveFormsModule],
-  providers: [SpicesService]
+  imports: [CommonModule, jqxGridModule, ReactiveFormsModule]
 })
 export class SpicesComponent implements OnInit {
 
