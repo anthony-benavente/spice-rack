@@ -1,0 +1,16 @@
+<h2>Spice Inventory for {{sessionService.user?.name}}</h2>
+<jqxGrid #userGrid 
+  selectionmode="checkbox" 
+  [source]="dataAdapter" 
+  [columns]="columns" 
+  [width]="800"
+  [columnsresize]="true"
+  [height]="500"></jqxGrid>
+
+<h3>Add Spice to Inventory</h3>
+<form [formGroup]="addSpiceForm">
+    <input formControlName="spice" placeholder="Spice">
+    <input formControlName="amount" placeholder="Amount (1-5)">
+    <button type="button" (click)="addSpice()">Add Spice</button>
+</form>
+
