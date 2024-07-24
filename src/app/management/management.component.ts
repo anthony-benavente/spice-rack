@@ -3,7 +3,7 @@ import { provideRouter, RouterModule, ROUTES } from "@angular/router";
 import { routes } from './management.routes';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-management',
     template: `
     <h1>Welcome to Spice Rack!</h1>
     <nav class="top-menu">
