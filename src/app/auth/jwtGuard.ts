@@ -19,7 +19,7 @@ export class IsLoggedInGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
         // verify the jwt exists and is valid
         const jwt = this.jwtService.getAccessToken();
-        const canRoute = this.validJwt(jwt);
+        const canRoute = this.validJwt(jwt?.token!);
         // const canRoute = true;
         if (!canRoute) {
             this.router.navigate(['/login']);
