@@ -5,13 +5,15 @@ import { UserModel } from "../../../db/user.model";
 import { EMPTY, map, Observable, tap } from "rxjs";
 import { JwtService } from "./jwt.service";
 import { IToken } from "../token";
+import { SessionService } from "./session.service";
 
 @Injectable()
 export class AuthService {
 
     constructor(
         private http: HttpClient,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private sessionService: SessionService
     ) { }
 
     saveJwt(results: Observable<IAuthLoginResults>): Observable<IAuthLoginResults> {
@@ -25,7 +27,11 @@ export class AuthService {
         return this.saveJwt(this.http.post<IAuthLoginResults>(`${environment.baseUrl}/auth/login`, {
             email: username, 
             password: password
-        }));
+        })).pipe(
+            tap((data) => {
+                this.sessionService.user = data.user;
+            })
+        );
     }
 
     register(registerData: {
