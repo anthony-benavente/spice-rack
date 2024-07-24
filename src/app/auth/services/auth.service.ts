@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../../../environment";
 import { UserModel } from "../../../db/user.model";
-import { EMPTY, map, Observable } from "rxjs";
+import { EMPTY, map, Observable, tap } from "rxjs";
 import { JwtService } from "./jwt.service";
 import { IToken } from "../token";
 
@@ -41,7 +41,17 @@ export class AuthService {
         if (!refreshToken) {
             return EMPTY;
         }
-        return this.http.post(`${environment.baseUrl}/auth/logout`, { refreshToken });
+        return this.http.post(`${environment.baseUrl}/auth/logout`, { refreshToken }).pipe(
+            tap(() => this.jwtService.reset())
+        );
+    }
+
+    refreshTokens(): Observable<{ access: IToken, refresh: IToken }> {
+        return this.http.post<{ access: IToken, refresh: IToken }>(`${environment.baseUrl}/auth/refresh-tokens`, {
+            refreshToken: this.jwtService.getRefreshToken()?.token
+        }).pipe(
+            tap(data => { this.jwtService.setJwt(data) })
+        );
     }
 }
 
