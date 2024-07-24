@@ -2,15 +2,17 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { JwtService } from './auth/services/jwt.service';
 import { IsLoggedInGuard } from './auth/jwtGuard';
+import { authInterceptor } from './auth/auth.interceptor';
+import { AuthService } from './auth/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
-    provideHttpClient(),
-    IsLoggedInGuard, JwtService
+    provideHttpClient(withInterceptors([authInterceptor])),
+    IsLoggedInGuard, JwtService, AuthService
   ]
 };
