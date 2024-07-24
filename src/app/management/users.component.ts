@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { jqxGridComponent, jqxGridModule } from "jqwidgets-ng/jqxgrid";
-import { UsersService } from "../services/users.service";
+import { UsersService } from "./services/users.service";
 import { catchError, forkJoin, Observable, of } from "rxjs";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  standalone: true,
   imports: [jqxGridModule, ReactiveFormsModule],
-  providers: [UsersService]
+  providers: [UsersService],
+  standalone: true
 })
 export class UsersComponent implements OnInit {
 

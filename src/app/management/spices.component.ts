@@ -3,15 +3,15 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { jqxGridComponent, jqxGridModule,  } from "jqwidgets-ng/jqxgrid";
 import { SpiceForms } from "../../db/spiceForms.enum";
 import { CommonModule } from "@angular/common";
-import { SpicesService } from "../services/spices.service";
+import { SpicesService } from "./services/spices.service";
 import { SpiceModel } from "../../db/spice.model";
 
 @Component({
   selector: 'app-spices',
   templateUrl: './spices.component.html',
+  imports: [jqxGridModule, ReactiveFormsModule, CommonModule],
   providers: [SpicesService],
-  standalone: true,
-  imports: [CommonModule, jqxGridModule, ReactiveFormsModule]
+  standalone: true
 })
 export class SpicesComponent implements OnInit {
 
