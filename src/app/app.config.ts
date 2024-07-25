@@ -8,6 +8,7 @@ import { IsLoggedInGuard } from './auth/jwtGuard';
 import { authInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/services/auth.service';
 import { SessionService } from './auth/services/session.service';
+import { SessionStorageService } from './util/storage.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     IsLoggedInGuard, 
     JwtService, 
     AuthService,
-    SessionService
+    SessionService,
+    SessionStorageService,
   ]
 };

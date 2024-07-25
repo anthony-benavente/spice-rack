@@ -6,6 +6,7 @@ import { EMPTY, map, Observable, tap } from "rxjs";
 import { JwtService } from "./jwt.service";
 import { IToken } from "../token";
 import { SessionService } from "./session.service";
+import { SessionStorageService } from "../../util/storage.service";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,8 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private jwtService: JwtService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private storageService: SessionStorageService
     ) { }
 
     saveJwt(results: Observable<IAuthLoginResults>): Observable<IAuthLoginResults> {
@@ -23,7 +25,8 @@ export class AuthService {
         }));
     }
 
-    login(username: string, password: string): Observable<IAuthLoginResults> {
+    login(username: string, password: string, rememberMe: boolean = true): Observable<IAuthLoginResults> {
+        this.storageService.setUseSessionStorage(!rememberMe);
         return this.saveJwt(this.http.post<IAuthLoginResults>(`${environment.baseUrl}/auth/login`, {
             email: username, 
             password: password
@@ -44,11 +47,13 @@ export class AuthService {
     }
 
     logout(refreshToken: string|null): Observable<any> {
+        this.jwtService.logout();
+        this.sessionService.logout();
         if (!refreshToken) {
             return EMPTY;
         }
         return this.http.post(`${environment.baseUrl}/auth/logout`, { refreshToken }).pipe(
-            tap(() => this.jwtService.reset())
+            tap(() => this.jwtService.logout())
         );
     }
 

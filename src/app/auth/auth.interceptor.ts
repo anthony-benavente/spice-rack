@@ -64,7 +64,7 @@ function refreshToken(req: HttpRequest<unknown>, next: HttpHandlerFn, deps: {
         }),
         catchError(err => {
             isRefreshing = false;
-            deps.jwtService.reset();
+            deps.jwtService.logout();
             deps.router.navigate(['/login']);
             return throwError(() => err);  
         })
