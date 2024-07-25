@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ProtectedService } from "./protectedService.service";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { SpiceModel } from "../../../db/spice.model";
 import { SessionService } from "../../auth/services/session.service";
 import { HttpClient } from "@angular/common/http";
@@ -8,6 +8,12 @@ import { HttpClient } from "@angular/common/http";
 export interface ISpiceInventory {
     userId: string;
     spice: SpiceModel;
+    amount: number;
+}
+
+interface ISpiceInventoryResponse {
+    user: string;
+    spices: any[];
 }
 
 @Injectable()
@@ -24,7 +30,12 @@ export class SpiceInventoryService extends ProtectedService {
             userId = this.sessionService.user?.id;
         } 
 
-        return this.get(`users/${userId}/inventory`);
+        return this.get<ISpiceInventoryResponse>(`users/${userId}/inventory`).pipe(
+            map((data) => {
+                console.log(data);
+                return data.spices;
+            })
+        );
     }
 
     addSpiceToInventory(data: { spice: string, amount: number }, userId?: string): Observable<unknown> {

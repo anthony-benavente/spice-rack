@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { jqxGridComponent, jqxGridModule } from "jqwidgets-ng/jqxgrid";
 import { SpiceInventoryService } from "./services/spice-inventory.service";
 import { SessionService } from "../auth/services/session.service";
+import { map } from "rxjs";
 
 @Component({
     selector: 'app-spice-inventory',
@@ -16,14 +17,17 @@ export class SpiceInventoryComponent implements OnInit {
 
     columns = [
         { text: 'Id', dataField: 'id', hidden: true },
-        { text: 'Spice', dataField: 'spice' },
-        { text: 'Amount', dataField: 'amount' },
+        { 
+            text: 'Spice', 
+            dataField: 'spice',
+        },
+        { text: 'Amount Remaining', dataField: 'amount', columntype: 'rating' },
     ];
     source: any = {
         localdata: [],
         datafields: [
           { name:  'id', type: 'string' },
-          { name: 'spice', type: 'string' },
+          { name: 'spice', type: 'string', },
           { name: 'amount', type: 'rating' },
         ],
         datatype: 'array'
@@ -40,11 +44,22 @@ export class SpiceInventoryComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-
+        this.refreshGrid();
     }
+    
     refreshGrid() {
-        this.spiceInventoryService.getSpiceInventory().subscribe(data => {
+        this.spiceInventoryService.getSpiceInventory().pipe(
+            map(data => {
+                return data.map(val => {
+                    return {
+                        ...val,
+                        spice: `${val.spice?.name} - ${val.spice?.brand}`,
+                    }
+                })
+            })
+        ).subscribe(data => {
             this.source.localdata = data;
+            console.log(this.source);
             this.grid.updatebounddata('cells');
             this.grid.autoresizecolumns();
         })
