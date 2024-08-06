@@ -23,4 +23,8 @@ export class SpicesService extends ProtectedService {
     addSpice(spice: SpiceModel): Observable<SpiceModel> {
         return this.post('spices', spice);
     }
+
+    getBrands(): Observable<string[]> {
+        return this.get<string[]>('spices/brands', { sortBy: 'name' });
+    }
 }

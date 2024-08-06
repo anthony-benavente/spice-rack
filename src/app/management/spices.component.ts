@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { jqxGridComponent, jqxGridModule,  } from "jqwidgets-ng/jqxgrid";
+import { jqxInputModule } from "jqwidgets-ng/jqxinput";
+import { jqxComboBoxModule } from "jqwidgets-ng/jqxcombobox";
 import { SpiceForms } from "../../db/spiceForms.enum";
 import { CommonModule } from "@angular/common";
 import { SpicesService } from "./services/spices.service";
-import { SpiceModel } from "../../db/spice.model";
 
 @Component({
   selector: 'app-spices',
   templateUrl: './spices.component.html',
-  imports: [jqxGridModule, ReactiveFormsModule, CommonModule],
+  imports: [jqxGridModule, ReactiveFormsModule, CommonModule, jqxInputModule, jqxComboBoxModule],
   providers: [SpicesService],
   standalone: true
 })
@@ -37,6 +38,7 @@ export class SpicesComponent implements OnInit {
     ],
     datatype: 'array'
   }
+  spiceBrands?: string[];
   dataAdapter = new jqx.dataAdapter(this.source);
   addSpiceForm = new FormGroup({
     name: new FormControl(),
@@ -57,6 +59,9 @@ export class SpicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spicesService.getBrands().subscribe(brands => {
+      this.spiceBrands = brands;
+    });
     this.spicesService.getSpices().subscribe(data => {
       this.source.localdata = data;
       this.spiceGrid.updatebounddata('cells');
@@ -68,12 +73,25 @@ export class SpicesComponent implements OnInit {
     const toAdd = {
       ...this.addSpiceForm.value
     };
+
+    // Ensure spice form is valid
+    if (this.spiceForms.filter(val => val.value === toAdd.form).length == 0) {
+      alert('Invalid spice form!');
+      return;
+    }
+
     this.spicesService.addSpice(toAdd).subscribe(data => {
       this.source.localdata.push(data);
       this.spiceGrid.addrow(data.id, data);
       this.spiceGrid.autoresizecolumns();
       this.addSpiceForm.reset();
       console.log(this.spiceName.nativeElement.focus());
+    });
+  }
+
+  brandInput_select(e: any) {
+    this.addSpiceForm.patchValue({
+      form: e.args.value
     });
   }
 }
