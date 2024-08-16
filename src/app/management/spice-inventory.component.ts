@@ -4,13 +4,16 @@ import { jqxGridComponent, jqxGridModule } from "jqwidgets-ng/jqxgrid";
 import { SpiceInventoryService } from "./services/spice-inventory.service";
 import { SessionService } from "../auth/services/session.service";
 import { map } from "rxjs";
+import { jqxComboBoxModule } from 'jqwidgets-ng/jqxcombobox';
+import { SpiceModel } from "../../db/spice.model";
+import { SpicesService } from "./services/spices.service";
 
 @Component({
     selector: 'app-spice-inventory',
     standalone: true,
     templateUrl: './spice-inventory.component.html',
-    imports: [jqxGridModule, ReactiveFormsModule], 
-    providers: [SpiceInventoryService]
+    imports: [jqxGridModule, ReactiveFormsModule, jqxComboBoxModule], 
+    providers: [SpiceInventoryService, SpicesService]
 })
 export class SpiceInventoryComponent implements OnInit {
     @ViewChild(jqxGridComponent) grid!: jqxGridComponent;
@@ -34,17 +37,25 @@ export class SpiceInventoryComponent implements OnInit {
     }
     dataAdapter = new jqx.dataAdapter(this.source);
     addSpiceForm = new FormGroup({
-        spice: new FormControl(),
+        spiceId: new FormControl(),
         amount: new FormControl()
     });
 
+    spices: SpiceModel[] = [];
+
     constructor(
         private spiceInventoryService: SpiceInventoryService,
+        private spiceService: SpicesService,
         public sessionService: SessionService
     ) { }
 
     ngOnInit() {
         this.refreshGrid();
+        this.spiceService.getSpices().subscribe(spices => this.spices = spices);
+    }
+
+    onSpiceChange(e: any) {
+        console.log(e);
     }
     
     refreshGrid() {
@@ -59,21 +70,21 @@ export class SpiceInventoryComponent implements OnInit {
             })
         ).subscribe(data => {
             this.source.localdata = data;
-            console.log(this.source);
             this.grid.updatebounddata('cells');
             this.grid.autoresizecolumns();
         })
     }
 
     addSpice() {
-        const { spice, amount } = {
+        const { spiceId, amount } = {
             ...this.addSpiceForm.value
         };
 
         this.spiceInventoryService.addSpiceToInventory({
-            spice, amount
+            spiceId, amount
         }).subscribe(() => {
-            console.log('Added spice successfully', spice, amount);
+            console.log('Added spice successfully', spiceId, amount);
+            this.refreshGrid();
         });
     }
 }
