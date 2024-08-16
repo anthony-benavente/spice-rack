@@ -5,7 +5,10 @@
   [columns]="columns" 
   [width]="800"
   [columnsresize]="true"
-  [height]="500"></jqxGrid>
+  [height]="500"
+  (onRowselect)="getSelectedRows($event)"
+  (onRowunselect)="getSelectedRows($event)"></jqxGrid>
+<button *ngIf="selectedIndexes.length > 0" type="button" (click)="deleteSelectedSpices()">Delete</button>
 
 <h3>Add Spice to Inventory</h3>
 <form [formGroup]="addSpiceForm">

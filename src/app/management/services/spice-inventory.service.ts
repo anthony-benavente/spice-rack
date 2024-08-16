@@ -32,7 +32,6 @@ export class SpiceInventoryService extends ProtectedService {
 
         return this.get<ISpiceInventoryResponse>(`users/${userId}/inventory`).pipe(
             map((data) => {
-                console.log(data);
                 return data.spices;
             })
         );
@@ -43,5 +42,12 @@ export class SpiceInventoryService extends ProtectedService {
             userId = this.sessionService.user?.id;
         }
         return this.post(`users/${userId}/inventory`, data);
+    }
+
+    deleteFromSpiceInventory(id: string, userId?: string): Observable<unknown> {
+        if (userId == null) {
+            userId = this.sessionService.user?.id;
+        }
+        return super.delete(`users/${userId}/inventory/${id}`);
     }
 }
