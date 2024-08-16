@@ -12,7 +12,7 @@
 
 <h3>Add Spice to Inventory</h3>
 <form [formGroup]="addSpiceForm">
-    <jqxComboBox formControlName="spiceId" [source]="spices" displayMember="name" valueMember="id" placeHolder="Spice"
+    <jqxComboBox formControlName="spiceId" [source]="spices" displayMember="label" valueMember="id" placeHolder="Spice"
       (onChange)="onSpiceChange($event)"></jqxComboBox>
     <input formControlName="amount" placeholder="Amount (1-5)">
     <button type="button" (click)="addSpice()">Add Spice</button>

@@ -53,7 +53,14 @@ export class SpiceInventoryComponent implements OnInit {
 
     ngOnInit() {
         this.refreshGrid();
-        this.spiceService.getSpices().subscribe(spices => this.spices = spices);
+        this.spiceService.getSpices().pipe(
+            map(data => {
+                return data.map(value => ({
+                    ...value,
+                    label: `${value.name} - ${value.brand}`
+                }));
+            })
+        ).subscribe(spices => this.spices = spices);
     }
 
     onSpiceChange(e: any) {
@@ -99,7 +106,7 @@ export class SpiceInventoryComponent implements OnInit {
             }
         })
     }
-    
+
     addSpice() {
         const { spiceId, amount } = {
             ...this.addSpiceForm.value
