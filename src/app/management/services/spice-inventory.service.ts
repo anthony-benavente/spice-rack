@@ -38,7 +38,7 @@ export class SpiceInventoryService extends ProtectedService {
         );
     }
 
-    addSpiceToInventory(data: { spice: string, amount: number }, userId?: string): Observable<unknown> {
+    addSpiceToInventory(data: { spiceId: string, amount: number }, userId?: string): Observable<unknown> {
         if (userId == null) {
             userId = this.sessionService.user?.id;
         }
