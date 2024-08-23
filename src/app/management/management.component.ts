@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { provideRouter, RouterModule, ROUTES } from "@angular/router";
-import { routes } from './management.routes';
+import { RouterModule } from "@angular/router";
 
 @Component({
     selector: 'app-management',
@@ -11,6 +10,7 @@ import { routes } from './management.routes';
         <a routerLink="spice-inventory">My Spices</a>
         <a routerLink="spices">Spices</a>
         <a routerLink="users">Users</a>
+        <a routerLink="logout">Log Out</a>
     </nav>
     <router-outlet></router-outlet>
     `,
