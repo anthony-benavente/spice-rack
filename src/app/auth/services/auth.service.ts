@@ -46,15 +46,13 @@ export class AuthService {
         return this.http.post<IAuthLoginResults>(`${environment.baseUrl}/auth/register`, registerData);
     }
 
-    logout(refreshToken: string|null): Observable<any> {
+    logout(refreshToken?: string): Observable<any> {
         this.jwtService.logout();
         this.sessionService.logout();
         if (!refreshToken) {
             return EMPTY;
         }
-        return this.http.post(`${environment.baseUrl}/auth/logout`, { refreshToken }).pipe(
-            tap(() => this.jwtService.logout())
-        );
+        return this.http.post(`${environment.baseUrl}/auth/logout`, { refreshToken });
     }
 
     refreshTokens(): Observable<{ access: IToken, refresh: IToken }> {
